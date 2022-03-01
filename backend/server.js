@@ -13,7 +13,11 @@ connectDB()
 // to notes AP
 
 const routeNotesApi = require('./routes/notesRoutes')
+const routeUserApi = require('./routes/userRoutes')
+
 app.use('/api/notes', routeNotesApi)
+app.use('/api/users', routeUserApi)
+
 app.use(errorHandler)
 
 app.listen(PORT, () => {
