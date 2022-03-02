@@ -2,13 +2,13 @@ const express = require('express')
 const router = express.Router()
 const {getNotes, createNotes, updateNotes, deleteNotes} = require('../controllers/notesController')
 
-// page routes and requests
-router.get('/', getNotes)
+const {protect} = require('../middleware/authMiddleware')
 
-router.post('/', createNotes)
+// page routes and requests combined
+// http://localhost:5000/api/notes/
+router.route('/').get(protect, getNotes).post(protect, createNotes)
+// http://localhost:5000/api/notes/id (noteID)
+router.route('/:id').delete(protect, deleteNotes).put(protect, updateNotes)
 
-router.put('/:id', updateNotes)
-
-router.delete('/:id', deleteNotes)
 
 module.exports = router

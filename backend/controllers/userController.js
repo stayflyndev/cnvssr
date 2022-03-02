@@ -74,9 +74,14 @@ const User = require('../model/userModel')
 //create user
 // GET
 // /api/users/me
+// http://localhost:5000/api/users/me/
 const getUser = asyncHandler(async (req, res) => {
-  
-res.json({message: 'user information'})
+  const {_id, name, email} = await User.findById(req.user.id)
+  res.status(200).json({
+    id: _id,
+    name,
+    email
+  })
 
 })
 
