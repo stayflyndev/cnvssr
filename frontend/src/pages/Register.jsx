@@ -11,10 +11,6 @@ import { makeStyles } from '@mui/styles';
 import Button from '@mui/material/Button';
 
 
-
-
-
-
 function Register() {
 const classes = useStyles();
 
@@ -26,8 +22,17 @@ const [formData, setFormData] = useState({
 
 })
 
-const handleChange = () =>{
-  
+const handleChange = (e) =>{
+//use the input fields
+const formdata = (prevState) => ({
+    ...prevState, [e.target.name]: e.target.value
+  })
+setFormData (formdata)
+}
+
+//submit form
+const handleSubmit = (e) =>{
+  e.prevent.default()
 }
 
 const {name, email, password, confirmpassword} = formData
@@ -41,14 +46,17 @@ const {name, email, password, confirmpassword} = formData
       <Box sx={{ flexGrow: 1 }}>
       <Grid container spacing={2} >
         <Grid xs={8} className={classes.input}>
+        <form onSubmit={handleSubmit}>
           <div className={classes.space_input}>
         <FormControl >
         <InputLabel htmlFor="component-outlined">Name</InputLabel>
         <OutlinedInput
+        type='text'
           id="name"
           value={name}
           onChange={handleChange}
           label="Name"
+          name='name'
         />
       </FormControl>
       </div>
@@ -56,10 +64,12 @@ const {name, email, password, confirmpassword} = formData
       <FormControl>
         <InputLabel htmlFor="component-outlined">Email</InputLabel>
         <OutlinedInput
+        type="email"
           id="email"
           value={email}
           onChange={handleChange}
           label="Email"
+          name='email'
         />
       </FormControl>
       </div>
@@ -67,10 +77,12 @@ const {name, email, password, confirmpassword} = formData
       <FormControl>
         <InputLabel htmlFor="component-outlined">Password</InputLabel>
         <OutlinedInput
+        type='password'
           id="password"
           value={password}
           onChange={handleChange}
           label="password"
+          name='password'
         />
       </FormControl>
       </div>
@@ -78,15 +90,17 @@ const {name, email, password, confirmpassword} = formData
       <FormControl>
         <InputLabel htmlFor="component-outlined">Confirm Password</InputLabel>
         <OutlinedInput
+        type="password"
           id="confirmpassword"
           value={confirmpassword}
           onChange={handleChange}
           label="Confirm Password"
+          name='confirmpassword'
         />
       </FormControl>
       </div>
-      <Button variant="contained">Submit</Button>
-
+      <Button variant="contained" type='submit'>Submit</Button>
+    </form>
         </Grid>
       </Grid>
       </Box>
