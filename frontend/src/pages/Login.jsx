@@ -17,9 +17,10 @@ const classes = useStyles();
 const [formData, setFormData] = useState({
  email: '',
   password: '',
-
-
 })
+
+const { email, password} = formData
+
 
 const handleChange = (e) =>{
 //use the input fields
@@ -34,7 +35,6 @@ const handleSubmit = (e) =>{
   e.prevent.default()
 }
 
-const {name, email, password, confirmpassword} = formData
 
   return (
     <>

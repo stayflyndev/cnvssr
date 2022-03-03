@@ -9,7 +9,11 @@ import OutlinedInput from '@mui/material/OutlinedInput';
 import Grid from '@mui/material/Grid';
 import { makeStyles } from '@mui/styles';
 import Button from '@mui/material/Button';
-
+import {useSelector, useDispatch} from 'react-redux'
+import {useNavigate} from 'react-router-dom'
+import {toast} from 'react-toastify'
+import {register, reset} from '../features/auth/authSlice'
+import Spinner from '../components/Spinner'
 
 function Register() {
 const classes = useStyles();
@@ -22,20 +26,54 @@ const [formData, setFormData] = useState({
 
 })
 
+const {name, email, password, confirmpassword} = formData
+
+
+const navigate = useNavigate()
+const dispatch = useDispatch()
+
+const { user, isLoading, isError, isSuccess, message} = useSelector((state)=> state.auth)
+
+useEffect(() =>
+{
+  if(isError) {
+    toast.error(message)
+  }
+  if(isSuccess || user){
+    navigate('/')
+  }
+  dispatch(reset)
+}, [user, isError, isSuccess, message, navigate, dispatch])
+
+
 const handleChange = (e) =>{
 //use the input fields
-const formdata = (prevState) => ({
-    ...prevState, [e.target.name]: e.target.value
-  })
-setFormData (formdata)
+// const formInputValue = (prevState) => ({
+//     ...prevState, [e.target.name]: e.target.value
+//   })
+setFormData ((prevState) => ({
+  ...prevState, [e.target.name]: e.target.value
+}))
 }
 
 //submit form
-const handleSubmit = (e) =>{
-  e.prevent.default()
+const onSubmit = (e) =>{
+  console.log("hh")
+  e.prevent.Default()
+  // if(password != confirmpassword){
+  //   toast.error('Password doesnt match')
+  // }else{
+  //   const userData = {
+  //     name,
+  //     email,
+  //     password
+  // }
+  // dispatch(register(userData))
 }
 
-const {name, email, password, confirmpassword} = formData
+
+
+
 
   return (
     <>
@@ -43,10 +81,8 @@ const {name, email, password, confirmpassword} = formData
       <div className={classes.root}>
       Please Create An Accont
       </div>
-      <Box sx={{ flexGrow: 1 }}>
-      <Grid container spacing={2} >
-        <Grid xs={8} className={classes.input}>
-        <form onSubmit={handleSubmit}>
+      
+        <form onSubmit={onSubmit}>
           <div className={classes.space_input}>
         <FormControl >
         <InputLabel htmlFor="component-outlined">Name</InputLabel>
@@ -101,9 +137,7 @@ const {name, email, password, confirmpassword} = formData
       </div>
       <Button variant="contained" type='submit'>Submit</Button>
     </form>
-        </Grid>
-      </Grid>
-      </Box>
+        
     </div>
     </>
   )
