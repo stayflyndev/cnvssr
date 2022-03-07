@@ -1,6 +1,6 @@
 
 import  {FaSignInAlt, FaSignOutAlt, FaUser} from 'react-icons/fa'
-import {Link} from 'react-router-dom'
+import {Link, useNavigate} from 'react-router-dom'
 import AppBar from '@mui/material/AppBar';
 import Box from '@mui/material/Box';
 import Toolbar from '@mui/material/Toolbar';
@@ -8,23 +8,54 @@ import Typography from '@mui/material/Typography';
 import Button from '@mui/material/Button';
 import IconButton from '@mui/material/IconButton';
 import { makeStyles } from '@mui/styles';
+import {useSelector, useDispatch} from 'react-redux'
+import {logout, reset} from '../features/auth/authSlice'
 
 
 function Header() {
   const classes = useStyles();
+  const navigate = useNavigate()
+  const dispatch = useDispatch()
+const {user}= useSelector((state) => state.auth)
 
+
+const onLogout =()=>{
+  dispatch(logout())
+  dispatch(reset())
+  navigate('/')
+
+}
+{}
   return (
 <div>
     <Box sx={{ flexGrow: 1 }}>
       <AppBar position="static" className={classes.navigation}>
         <Toolbar>
         <Link to='/'>Cnvssr Notes</Link>
-        <Link to='/login'>
+        <ul>
+          {user ? (
+              <li>
+                <Button onClick={onLogout}>Logout</Button>
+                <FaSignInAlt/> 
+              </li>
+          ) :(
+            <>
+            <li>
+          <Link to='/login'>
             <FaSignInAlt/> Login
         </Link>
-        <Link to='/register'>
+          </li>
+          <li>
+          <Link to='/register'>
             <FaUser/> Register
         </Link>
+          </li>
+            </>
+          )}
+          
+        </ul>
+       
+       
 
         </Toolbar>
       </AppBar>

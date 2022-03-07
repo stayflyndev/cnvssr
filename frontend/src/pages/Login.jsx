@@ -9,6 +9,11 @@ import OutlinedInput from '@mui/material/OutlinedInput';
 import Grid from '@mui/material/Grid';
 import { makeStyles } from '@mui/styles';
 import Button from '@mui/material/Button';
+import {useSelector, useDispatch} from 'react-redux'
+import {useNavigate} from 'react-router-dom'
+import {toast} from 'react-toastify'
+import {login, reset} from '../features/auth/authSlice'
+import Spinner from '../components/Spinner'
 
 
 function Login() {
@@ -21,6 +26,23 @@ const [formData, setFormData] = useState({
 
 const { email, password} = formData
 
+const navigate = useNavigate()
+const dispatch = useDispatch()
+
+const { user, isLoading, isError, isSuccess, message} = useSelector((state)=> state.auth)
+
+useEffect(() =>
+{
+  if(isError) {
+    toast.error(message)
+  }
+  if(isSuccess || user){
+    navigate('/')
+  }
+  dispatch(reset)
+}, [user, isError, isSuccess, message, navigate, dispatch])
+
+
 
 const handleChange = (e) =>{
 //use the input fields
@@ -30,9 +52,15 @@ const formdata = (prevState) => ({
 setFormData (formdata)
 }
 
+  
 //submit form
-const handleSubmit = (e) =>{
-  e.prevent.default()
+const onSubmit = (e) =>{
+  e.preventDefault()
+  const userData = {
+    email, 
+    password
+  }
+  dispatch(login(userData))
 }
 
 
@@ -45,7 +73,7 @@ const handleSubmit = (e) =>{
       <Box sx={{ flexGrow: 1 }}>
       <Grid container spacing={2} >
         <Grid xs={8} className={classes.input}>
-        <form onSubmit={handleSubmit}>
+        <form>
           
       <div className={classes.space_input}>
       <FormControl>
@@ -74,7 +102,7 @@ const handleSubmit = (e) =>{
       </FormControl>
       </div>
       
-      <Button variant="contained" type='submit'>Login</Button>
+      <Button variant="contained" onClick={onSubmit}>Login</Button>
     </form>
         </Grid>
       </Grid>

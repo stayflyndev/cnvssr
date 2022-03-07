@@ -57,19 +57,20 @@ setFormData ((prevState) => ({
 }
 
 //submit form
-const onSubmit = (e) =>{
-  console.log("hh")
-  e.prevent.Default()
-  // if(password != confirmpassword){
-  //   toast.error('Password doesnt match')
-  // }else{
-  //   const userData = {
-  //     name,
-  //     email,
-  //     password
-  // }
-  // dispatch(register(userData))
-}
+const onSubmit = (e) =>
+{ 
+  console.log("whaaat theee fugggg")
+  e.preventDefault()
+  if(password !== confirmpassword){
+    toast.error('Password doesnt match')
+  }else{
+    const userData = {
+      name,
+      email,
+      password
+  }
+  dispatch(register(userData))
+}}
 
 
 
