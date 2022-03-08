@@ -1,14 +1,44 @@
 import React from 'react'
 import Button from '../components/Header'
 import { makeStyles } from '@mui/styles';
+import {useEffect} from 'react'
+import {useNavigate} from 'react-router-dom'
+import {useSelector, useDispatch} from 'react-redux'
+import NotesForm from '../components/NotesForm'
+import {getNotes, reset} from '../features/notes/notesSlice'
 
 function Dashboard() {
   const classes = useStyles();
+  const navigate = useNavigate()
+  const dispatch = useDispatch()
 
-  return (
-    <div className={classes.root}>Dashboard
-    <Button/>
+  const {user} = useSelector((state) => state.auth)
+  const {notes, isLoading, isError, message} = useSelector((state) =>state.notes )
+
+  useEffect(() => {
+if(isError){
+  console.log(message)
+}
+
+    if(!user) {
+      navigate('/login')
+    }
+    dispatch(getNotes())
+
+return () => {
+  dispatch(reset)
+}
+
+  }, [user, navigate, isError, message, dispatch])
+
+  return (<>
+    <div className={classes.root}>
+      
+      Welcome {user.name}
+    <NotesForm/>
+ 
     </div>
+    </>
   )
 }
 

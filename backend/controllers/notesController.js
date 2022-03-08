@@ -44,7 +44,7 @@ res.status(200).json(note)
         res.status(401)
         throw new Error("User not found")
       }
-      if(note.user.toString() != user.id){
+      if(note.user.toString() !== user.id){
         res.status(401)
         throw new Error("User not authorized to update this")
       }
@@ -67,7 +67,7 @@ res.status(200).json(note)
       res.status(401)
       throw new Error("User not found")
     }
-    if(note.user.toString() != user.id){
+    if(note.user.toString() !== user.id){
       res.status(401)
       throw new Error("User not authorized to update this")
     }
