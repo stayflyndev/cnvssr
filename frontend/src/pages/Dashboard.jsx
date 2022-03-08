@@ -5,7 +5,9 @@ import {useEffect} from 'react'
 import {useNavigate} from 'react-router-dom'
 import {useSelector, useDispatch} from 'react-redux'
 import NotesForm from '../components/NotesForm'
+import NoteItem  from '../components/NoteItem';
 import {getNotes, reset} from '../features/notes/notesSlice'
+import NotesSection from '../components/NotesSection';
 
 function Dashboard() {
   const classes = useStyles();
@@ -38,6 +40,17 @@ return () => {
       
       Welcome {user && user.name}
     <NotesForm/>
+    {/* render out notes */}
+    <div>
+      {notes.length > 0 ? (<div>
+        {notes.map((note) => (
+     <NoteItem key={note._id} note={note}/>
+
+        ) )}
+        </div>
+        ) : (<h3> There are no notes</h3>)}
+    </div>
+    
  
     </div>
   </div>
@@ -52,8 +65,13 @@ const useStyles = makeStyles({
     borderRadius: 3,
     boxShadow: '0 3px 5px 2px rgba(255, 105, 135, .3)',
     color: 'white',
-    height: 48,
+    height:500,
     padding: '50px 30px',
+  },
+  notesItem:{
+    background: 'red',
+    height: 45,
+    padding: '300px'
   }
 });
 
