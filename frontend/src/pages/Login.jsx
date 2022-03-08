@@ -1,4 +1,3 @@
-
 import {useState, useEffect} from 'react'
 import { FormControl } from '@mui/material';
 import Input from '@mui/material/Input';
@@ -39,7 +38,7 @@ useEffect(() =>
   if(isSuccess || user){
     navigate('/')
   }
-  dispatch(reset)
+  dispatch(reset())
 }, [user, isError, isSuccess, message, navigate, dispatch])
 
 

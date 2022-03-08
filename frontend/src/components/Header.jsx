@@ -25,9 +25,8 @@ const onLogout =()=>{
   navigate('/')
 
 }
-{}
+
   return (
-<div>
     <Box sx={{ flexGrow: 1 }}>
       <AppBar position="static" className={classes.navigation}>
         <Toolbar>
@@ -54,13 +53,9 @@ const onLogout =()=>{
           )}
           
         </ul>
-       
-       
-
-        </Toolbar>
+       </Toolbar>
       </AppBar>
     </Box>
-    </div>
   );
 }
 

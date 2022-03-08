@@ -26,19 +26,22 @@ if(isError){
     dispatch(getNotes())
 
 return () => {
-  dispatch(reset)
+  dispatch(reset())
 }
 
   }, [user, navigate, isError, message, dispatch])
 
-  return (<>
+  return (
+
+  <div>
     <div className={classes.root}>
       
-      Welcome {user.name}
+      Welcome {user && user.name}
     <NotesForm/>
  
     </div>
-    </>
+  </div>
+  
   )
 }
 

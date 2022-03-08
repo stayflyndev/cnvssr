@@ -1,5 +1,6 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit'
-import authService from './authService'
+import authService from './authService';
+
 const user = JSON.parse(localStorage.getItem('user'))
 
 const initialState = {
@@ -8,8 +9,7 @@ const initialState = {
      isError: false,
      isSuccess: false,
      isLoading: false,
-     message: ''
-    
+     message: '',
     }
     //register user
     const asyncthunkreg = async(user, thunkAPI)=>{
@@ -40,7 +40,7 @@ const initialState = {
 
     //logout
     export const logout = createAsyncThunk('auth/logout', async() => {
-        await authService.logout
+        await authService.logout()
     }) 
 
 
@@ -55,7 +55,12 @@ const initialState = {
         initialState,
         reducers: {
             //reducer function
-            reset: resetStateValues
+            reset: (state) => {
+                state.isLoading = false
+                state.isSuccess = false
+                state.isError = false
+                state.message = ''
+              },
         },
         extraReducers: (builder) => {
             //what to do with the state when the register is pending, fullfilled, and rejected
@@ -70,6 +75,7 @@ const initialState = {
                 state.isLoading = false
                 state.isError = true
                 state.message= action.payload
+                state.user = null
             })
             .addCase(login.pending, (state) => {state.isLoading = true})
             .addCase(login.fulfilled, (state, action) => {
@@ -80,9 +86,10 @@ const initialState = {
                 state.isLoading = false
                 state.isError = true
                 state.message= action.payload
+                state.user = null
             })
             .addCase(logout.fulfilled, (state) => {
-                state.user  =null
+                state.user  = null
             })
         }
     })

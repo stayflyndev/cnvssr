@@ -15,7 +15,7 @@ import {createNote} from '../features/notes/notesSlice'
 function NotesForm() {
     const classes = useStyles();
 
-    const [text, setText] = useState(' ');
+    const [text, setText] = useState('');
 
     const dispatch = useDispatch()
 
@@ -33,13 +33,13 @@ function NotesForm() {
     <Box sx={{ flexGrow: 1 }}>
       <Grid container spacing={2} >
         <Grid xs={8} className={classes.input}>
-        <form onClick={onSubmit}>
+        <form onSubmit={onSubmit}>
           
       <div className={classes.space_input}>
       <FormControl>
         <InputLabel htmlFor="component-outlined">Write Note</InputLabel>
         <OutlinedInput
-        type="text"
+          type="text"
           id="text"
           value={text}
           onChange={(e) => setText(e.target.value)}
@@ -50,7 +50,7 @@ function NotesForm() {
       </div>
      
       
-      <Button variant="contained" type="submit" onClick={onSubmit}>Add Note</Button>
+      <Button variant="contained" type="submit">Add Note</Button>
     </form>
         </Grid>
       </Grid>

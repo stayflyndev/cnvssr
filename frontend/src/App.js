@@ -5,6 +5,7 @@ import Register from './pages/Register'
 import Container from '@mui/material/Container';
 import {ToastContainer} from 'react-toastify'
 import 'react-toastify/dist/ReactToastify.css';
+import Header from './components/Header'
 
 
 
@@ -15,7 +16,7 @@ function App() {
     <Router>
     <div className='container'>
     <Container maxWidth="sm">
-
+<Header />
       <Routes>
         <Route path='/' element={<Dashboard/>}/>
         <Route path='/login' element={<Login/>}/>

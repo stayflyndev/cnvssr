@@ -50,7 +50,7 @@ const initialState = {
 
     export const notesSlice = createSlice({
     //create a new 
-        name: 'notes',
+        name: 'note',
         initialState,
         reducers: {
             //reducer function
