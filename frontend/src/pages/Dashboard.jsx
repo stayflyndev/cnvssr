@@ -8,6 +8,9 @@ import NotesForm from '../components/NotesForm'
 import NoteItem  from '../components/NoteItem';
 import {getNotes, reset} from '../features/notes/notesSlice'
 import NotesSection from '../components/NotesSection';
+import ImageList from '@mui/material/ImageList';
+import ImageListItem from '@mui/material/ImageListItem';
+
 
 function Dashboard() {
   const classes = useStyles();
@@ -42,13 +45,16 @@ return () => {
     <NotesForm/>
     {/* render out notes */}
     <div>
+    <ImageList sx={{ width: 500, height: 450 }} cols={3} rowHeight={164}>
+
       {notes.length > 0 ? (<div>
         {notes.map((note) => (
      <NoteItem key={note._id} note={note}/>
-
-        ) )}
+     ) )}
         </div>
         ) : (<h3> There are no notes</h3>)}
+            </ImageList>
+
     </div>
     
  
@@ -65,7 +71,7 @@ const useStyles = makeStyles({
     borderRadius: 3,
     boxShadow: '0 3px 5px 2px rgba(255, 105, 135, .3)',
     color: 'white',
-    height:500,
+    height:800,
     padding: '50px 30px',
   },
   notesItem:{

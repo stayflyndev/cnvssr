@@ -24,9 +24,22 @@ const getNotes = async (token) => {
     return response.data
 }
 
+//delete notes
+const deleteNote = async (noteId, token) => {
+    const config = {
+        headers: {
+            Authorization : `Bearer ${token}`
+        }
+    }
+
+    const response = await axios.delete(API_URL + noteId, config)
+    return response.data
+}
+
 const noteService = {
     createNote,
-    getNotes
+    getNotes,
+    deleteNote
 }
 
 export default noteService

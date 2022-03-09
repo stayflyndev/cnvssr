@@ -30,7 +30,23 @@ const initialState = {
     export const createNote = createAsyncThunk('notes/create', asyncthunkCreateNote)
 
 
-        //get notes
+      //DELETE NOTE
+      const asyncthunkDeleteNote = async(id, thunkAPI)=>{
+        try{
+            const token = thunkAPI.getState().auth.user.token
+          return await noteService.deleteNote(id, token)
+        } catch(error) {
+          const message = (error.response && error.response.data && error.response.data.message || error.message || error.toString())
+  
+          //send error message
+          return thunkAPI.rejectWithValue(message)
+        }
+        
+      }
+      export const deleteNote = createAsyncThunk('notes/delete', asyncthunkDeleteNote)
+
+
+        //GET NOTES
         const asyncthunkGetNotes = async(_, thunkAPI)=>{
             try{
                 const token = thunkAPI.getState().auth.user.token
@@ -75,9 +91,21 @@ const initialState = {
             .addCase(getNotes.fulfilled, (state, action) => {
                 state.isLoading = false 
                 state.isSuccess=true
-                state.notes = (action.payload)
+                state.notes = action.payload
             })
             .addCase(getNotes.rejected, (state, action) => {
+                state.isLoading = false
+                state.isError = true
+                state.message= action.payload
+            })
+            .addCase(deleteNote.pending, (state) => {state.isLoading = true})
+            .addCase(deleteNote.fulfilled, (state, action) => {
+                state.isLoading = false 
+                state.isSuccess=true
+                state.notes = state.notes.filter
+                ((note) => note._id !== action.payload.id)
+            })
+            .addCase(deleteNote.rejected, (state, action) => {
                 state.isLoading = false
                 state.isError = true
                 state.message= action.payload
